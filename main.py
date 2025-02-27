@@ -17,6 +17,7 @@ class MyPlugin(Star):
         logger.info(message_chain)
         hot = self.get_hot()
         yield event.plain_result(f'今日热搜：\n{self.get_hot()}')
+        
     def get_hot(self):
         url = "https://momoyu.cc/api/hot/list"
         querystring = {"type":"1"}
@@ -38,4 +39,16 @@ class MyPlugin(Star):
             "Cookie": "connect.sid=s%3A1COKm5rqaRHZkaqYh4V8m-ikeriO-Zzm.f0ofYW7ZL4E%2BLCoKBVXJAhVVIpA9EQJLFOgUs70gX%2Bw"
         }
         response = requests.request("GET", url, data=payload, headers=headers, params=querystring)
-        return response.text
+        try:
+            data = response.json()
+            if data['status'] == 100000 and data['data']:
+                result = []
+                for platform in data['data']:
+                    if platform['data']:  # 确保平台有数据
+                        result.append(f"\n{platform['name']}:")
+                        for item in platform['data'][0]['data'][:3]:  # 每个平台取前5条
+                            result.append(f"- {item['title']}")
+                return '\n'.join(result)
+            return "获取热搜失败：数据格式错误"
+        except Exception as e:
+            return f"获取热搜失败：{str(e)}"
