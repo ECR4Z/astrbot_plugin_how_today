@@ -16,7 +16,7 @@ class MyPlugin(Star):
         message_chain = event.get_messages() # 用户所发的消息的消息链 # from astrbot.api.message_components import *
         logger.info(message_chain)
         hot = self.get_hot()
-        yield event.plain_result(f'今日热搜：\n{self.get_hot()}')
+        yield event.plain_result(f'----------今日热搜----------: {self.get_hot()}')
         
     def get_hot(self):
         url = "https://momoyu.cc/api/hot/list"
@@ -46,8 +46,8 @@ class MyPlugin(Star):
                 for platform in data['data']:
                     if platform['data']:  # 确保平台有数据
                         result.append(f"\n{platform['name']}:")
-                        for item in platform['data'][0]['data'][:5]:  # 每个平台取前5条
-                            result.append(f"- {item['title']}")
+                        for item in platform['data'][0]['data'][:8]:  # 每个平台取前8条
+                            result.append(f"{item['data'].index(item) + 1}. {item['title']}")
                 return '\n'.join(result)
             return "获取热搜失败：数据格式错误"
         except Exception as e:
