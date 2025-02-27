@@ -46,8 +46,8 @@ class MyPlugin(Star):
                 for platform in data['data']:
                     if platform['data']:  # 确保平台有数据
                         result.append(f"\n{platform['name']}:")
-                        for item in platform['data'][0]['data'][:8]:  # 每个平台取前8条
-                            result.append(f"{item['data'].index(item) + 1}. {item['title']}")
+                        for i, item in enumerate(platform['data'][0]['data'][:8], 1):  # 每个平台取前8条
+                            result.append(f"{i}. {item['title']}")
                 return '\n'.join(result)
             return "获取热搜失败：数据格式错误"
         except Exception as e:
