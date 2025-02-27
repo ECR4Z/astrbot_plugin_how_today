@@ -46,7 +46,7 @@ class MyPlugin(Star):
                 for platform in data['data']:
                     if platform['data']:  # 确保平台有数据
                         result.append(f"\n{platform['name']}:")
-                        for item in platform['data'][0]['data'][:3]:  # 每个平台取前5条
+                        for item in platform['data'][0]['data'][:5]:  # 每个平台取前5条
                             result.append(f"- {item['title']}")
                 return '\n'.join(result)
             return "获取热搜失败：数据格式错误"
