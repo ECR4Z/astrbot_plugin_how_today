@@ -30,7 +30,6 @@ class MyPlugin(Star):
             "priority": "u=1, i",
             "referer": "https://momoyu.cc/",
             "sec-ch-ua-mobile": "?0",
-            "sec-ch-ua-platform": ""Windows"",
             "sec-fetch-dest": "empty",
             "sec-fetch-mode": "cors",
             "sec-fetch-site": "same-origin",
